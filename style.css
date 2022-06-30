@@ -1,0 +1,20 @@
+body {
+    background-color: rgb(167, 163, 163);
+}
+
+.firstRow,
+.secondRow,
+.thirdRow {
+    display: flex;
+}
+
+.firstRow div,
+.secondRow div,
+.thirdRow div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100px;
+    height: 100px;
+    border: 1px solid black;
+}
