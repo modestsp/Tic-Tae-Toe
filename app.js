@@ -18,36 +18,46 @@ const Gameboard = (() => {
         }
     }
     function gameWin() {
-        if ((gameBoard[0] == "X" && gameBoard[1] == "X" && gameBoard[2] == "X") ||
-            (gameBoard[0] == "O" && gameBoard[1] == "O" && gameBoard[2] == "O")) {
+        if ((gameBoard[0] === "X" && gameBoard[1] === "X" && gameBoard[2] === "X") ||
+            (gameBoard[0] === "O" && gameBoard[1] === "O" && gameBoard[2] === "O")) {
             winner.textContent = `${Gameboard.turn} WON!`;
-        } else if ((gameBoard[3] == "X" && gameBoard[4] == "X" && gameBoard[5] == "X") ||
-            (gameBoard[3] == "O" && gameBoard[4] == "O" && gameBoard[5] == "O")) {
+            disableBoard();
+        } else if ((gameBoard[3] === "X" && gameBoard[4] === "X" && gameBoard[5] === "X") ||
+            (gameBoard[3] === "O" && gameBoard[4] === "O" && gameBoard[5] === "O")) {
             winner.textContent = `${Gameboard.turn} WON!`;
-        } else if ((gameBoard[6] == "X" && gameBoard[7] == "X" && gameBoard[8] == "X") ||
-            (gameBoard[6] == "O" && gameBoard[7] == "O" && gameBoard[8] == "O")) {
+            disableBoard();
+        } else if ((gameBoard[6] === "X" && gameBoard[7] === "X" && gameBoard[8] === "X") ||
+            (gameBoard[6] === "O" && gameBoard[7] === "O" && gameBoard[8] === "O")) {
             winner.textContent = `${Gameboard.turn} WON!`;
-        } else if ((gameBoard[0] == "X" && gameBoard[3] == "X" && gameBoard[6] == "X") ||
-            (gameBoard[0] == "O" && gameBoard[3] == "O" && gameBoard[6] == "O")) {
+            disableBoard();
+        } else if ((gameBoard[0] === "X" && gameBoard[3] === "X" && gameBoard[6] === "X") ||
+            (gameBoard[0] === "O" && gameBoard[3] === "O" && gameBoard[6] === "O")) {
             winner.textContent = `${Gameboard.turn} WON!`;
-        } else if ((gameBoard[1] == "X" && gameBoard[4] == "X" && gameBoard[7] == "X") ||
-            (gameBoard[1] == "O" && gameBoard[4] == "O" && gameBoard[7] == "O")) {
+            disableBoard();
+        } else if ((gameBoard[1] === "X" && gameBoard[4] === "X" && gameBoard[7] === "X") ||
+            (gameBoard[1] === "O" && gameBoard[4] === "O" && gameBoard[7] === "O")) {
             winner.textContent = `${Gameboard.turn} WON!`;
-        } else if ((gameBoard[2] == "X" && gameBoard[5] == "X" && gameBoard[8] == "X") ||
-            (gameBoard[2] == "O" && gameBoard[5] == "O" && gameBoard[8] == "O")) {
+            disableBoard();
+        } else if ((gameBoard[2] === "X" && gameBoard[5] === "X" && gameBoard[8] === "X") ||
+            (gameBoard[2] === "O" && gameBoard[5] === "O" && gameBoard[8] === "O")) {
             winner.textContent = `${Gameboard.turn} WON!`;
-        } else if ((gameBoard[0] == "X" && gameBoard[4] == "X" && gameBoard[8] == "X") ||
-            (gameBoard[0] == "O" && gameBoard[4] == "O" && gameBoard[8] == "O")) {
+            disableBoard();
+        } else if ((gameBoard[0] === "X" && gameBoard[4] === "X" && gameBoard[8] === "X") ||
+            (gameBoard[0] === "O" && gameBoard[4] === "O" && gameBoard[8] === "O")) {
             winner.textContent = `${Gameboard.turn} WON!`;
-        } else if ((gameBoard[2] == "X" && gameBoard[4] == "X" && gameBoard[6] == "X") ||
-            (gameBoard[2] == "O" && gameBoard[4] == "O" && gameBoard[6] == "O")) {
+            disableBoard();
+        } else if ((gameBoard[2] === "X" && gameBoard[4] === "X" && gameBoard[6] === "X") ||
+            (gameBoard[2] === "O" && gameBoard[4] === "O" && gameBoard[6] == "O")) {
             winner.textContent = `${Gameboard.turn} WON!`;
+            disableBoard();
         }
     }
     function reset() {
         Gameboard.turn = 'Player One'
         Gameboard.gameBoard = ["", "", "", "", "", "", "", "", ""];
         Gameboard.pointer = "X"
+        winner.textContent = ''
+        disableBoard();
     }
     return {
         gameBoard,
@@ -61,7 +71,14 @@ const Gameboard = (() => {
     }
 })();
 
+function disableBoard() {
+    position.forEach(div => {
+        div.classList.toggle("disable");
+    })
+}
 
+
+// Player constructor
 const Player = (name, assignXO) => {
     // const chooseSide = () => {
     //     assignXO = prompt('Choose X or O');
@@ -106,21 +123,20 @@ btnP2.addEventListener('click', () => {
 
 // RESET GAME
 reset.addEventListener("click", () => {
-    holderXO.forEach(xo => {
-        xo.textContent = ""
-    })
     Gameboard.reset();
+    position.forEach(div => {
+        div.textContent = ""
+    })
+
 })
 
 // CREATING DISPLAY "X" "O"
 const position = document.querySelectorAll(".position")
-position.forEach((arr) => {
-    arr.addEventListener('click', () => {
-        if (arr.firstChild === null) {
-            const positionInDisplay = document.createElement('p')
-            arr.appendChild(positionInDisplay);
-            positionInDisplay.textContent = Gameboard.pointer
-            Gameboard.gameBoard[arr.id] = Gameboard.pointer
+position.forEach((div) => {
+    div.addEventListener('click', () => {
+        if (div.textContent == "") {
+            div.textContent = Gameboard.pointer
+            Gameboard.gameBoard[div.id] = Gameboard.pointer
             Gameboard.gameWin();
             Gameboard.switchPointer();
             Gameboard.switchTurn();
@@ -129,10 +145,12 @@ position.forEach((arr) => {
         } else {
             alert("Already selected")
         }
+
     })
 })
 
 
 
-// TODO - RESET BUTTON
+// TODO - RESET BUTTON (NOT WORKING WELL)
+// CHECK WIN CONDITION
 
